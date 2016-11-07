@@ -944,7 +944,8 @@ def create_xblock_info(xblock, data=None, metadata=None, include_ancestor_info=F
         visibility_state = None
     published = modulestore().has_published_version(xblock) if not is_library_block else None
 
-    # defining the default value 'True' for delete, drag and add new child actions in xblock_actions for each xblock.
+    # defining the default value 'True' for delete, duplicate, drag and add new child actions
+    # in xblock_actions for each xblock.
     xblock_actions = {'deletable': True, 'draggable': True, 'childAddable': True, 'duplicable': True}
     explanatory_message = None
 

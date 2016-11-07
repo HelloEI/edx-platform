@@ -292,14 +292,40 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
                 });
             },
 
+            createPlaceholderElement: function() {
+                return $('<li/>', {class: 'outline-item'});
+            },
+
+            parentElement: function(xblockElement, category){
+                var parentCategory = category == 'unit' ? 'subsection' : category == 'subsection' ? 'section' : 'course';
+                return xblockElement.closest('.outline-' + parentCategory);
+            },
+
             handleDuplicateEvent: function(event) {
                 var self = this,
-                    target = $(event.currentTarget),
-                    xblockElement = $(target).closest('.outline-item');
+                    parentView = this.parentView,
+                    xblockElement = $(event.currentTarget).closest('.outline-item'),
+                    category = XBlockViewUtils.getXBlockType(self.model.get('category'), parentView.model, true),
+                    parentElement = self.parentElement(xblockElement, category),
+                    placeholderElement = self.createPlaceholderElement().insertAfter(xblockElement),
+                    scrollOffset = ViewUtils.getScrollOffset(xblockElement);
+
                 event.preventDefault();
-                XBlockViewUtils.duplicateXBlock(xblockElement).done(function() {
-                    console.log('DUPLICATED');
-                });
+                XBlockViewUtils.duplicateXBlock(xblockElement, parentElement)
+                    .done(function (locator) {
+                        ViewUtils.setScrollOffset(placeholderElement, scrollOffset);
+                        placeholderElement.data('locator', locator)
+                        if (parentView) {
+                            parentView.refresh(self, event);
+                        } else {
+                            self.refresh();
+                        }
+                    })
+                    .fail(function () {
+                        // Remove the placeholder if the update failed
+                        placeholderElement.remove();
+                    });
+
             },
 
             handleAddEvent: function(event) {
