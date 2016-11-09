@@ -231,7 +231,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
         return {
             'VisibilityState': VisibilityState,
             'addXBlock': addXBlock,
-             duplicateXBlock: duplicateXBlock,
+            duplicateXBlock: duplicateXBlock,
             'deleteXBlock': deleteXBlock,
             'updateXBlockField': updateXBlockField,
             'getXBlockVisibilityClass': getXBlockVisibilityClass,
