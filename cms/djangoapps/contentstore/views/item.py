@@ -664,7 +664,7 @@ def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_
             if parent_category:
                 duplicate_metadata['display_name'] = display_name
             else:
-                duplicate_metadata['display_name'] = _("Duplicate of {0}").format(display_name)
+                duplicate_metadata['display_name'] = _("Duplicate of '{0}'").format(display_name)
 
         asides_to_create = []
         for aside in source_item.runtime.get_asides(source_item):

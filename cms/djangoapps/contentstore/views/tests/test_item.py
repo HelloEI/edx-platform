@@ -571,16 +571,20 @@ class TestDuplicateItem(ItemTest, DuplicateHelper):
         resp = self.create_xblock(parent_usage_key=self.usage_key, category='chapter')
         self.chapter_usage_key = self.response_usage_key(resp)
 
-        # create a sequential containing a problem and an html component
+        # create a sequential
         resp = self.create_xblock(parent_usage_key=self.chapter_usage_key, category='sequential')
         self.seq_usage_key = self.response_usage_key(resp)
 
+        # create a vertical containing a problem and an html component
+        resp = self.create_xblock(parent_usage_key=self.seq_usage_key, category='vertical')
+        self.vert_usage_key = self.response_usage_key(resp)
+
         # create problem and an html component
-        resp = self.create_xblock(parent_usage_key=self.seq_usage_key, category='problem',
+        resp = self.create_xblock(parent_usage_key=self.vert_usage_key, category='problem',
                                   boilerplate='multiplechoice.yaml')
         self.problem_usage_key = self.response_usage_key(resp)
 
-        resp = self.create_xblock(parent_usage_key=self.seq_usage_key, category='html')
+        resp = self.create_xblock(parent_usage_key=self.vert_usage_key, category='html')
         self.html_usage_key = self.response_usage_key(resp)
 
         # Create a second sequential just (testing children of children)
@@ -591,8 +595,9 @@ class TestDuplicateItem(ItemTest, DuplicateHelper):
         Tests that a duplicated xblock is identical to the original,
         except for location and display name.
         """
-        self._duplicate_and_verify(self.problem_usage_key, self.seq_usage_key)
-        self._duplicate_and_verify(self.html_usage_key, self.seq_usage_key)
+        self._duplicate_and_verify(self.problem_usage_key, self.vert_usage_key)
+        self._duplicate_and_verify(self.html_usage_key, self.vert_usage_key)
+        self._duplicate_and_verify(self.vert_usage_key, self.seq_usage_key)
         self._duplicate_and_verify(self.seq_usage_key, self.chapter_usage_key)
         self._duplicate_and_verify(self.chapter_usage_key, self.usage_key)
 
@@ -653,7 +658,7 @@ class TestDuplicateItem(ItemTest, DuplicateHelper):
         verify_name(self.html_usage_key, self.seq_usage_key, "Duplicate of 'Text'")
 
         # The sequence does not have a display_name set, so category is shown.
-        verify_name(self.seq_usage_key, self.chapter_usage_key, "Duplicate of sequential")
+        verify_name(self.seq_usage_key, self.chapter_usage_key, "Duplicate of 'sequential'")
 
         # Now send a custom display name for the duplicate.
         verify_name(self.seq_usage_key, self.chapter_usage_key, "customized name", display_name="customized name")
