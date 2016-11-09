@@ -635,7 +635,7 @@ def _create_item(request):
     )
 
 
-def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_name=None):
+def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_name=None, parent_category=None):
     """
     Duplicate an existing xblock as a child of the supplied parent_usage_key.
     """
@@ -657,9 +657,14 @@ def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_
             duplicate_metadata['display_name'] = display_name
         else:
             if source_item.display_name is None:
-                duplicate_metadata['display_name'] = _("Duplicate of {0}").format(source_item.category)
+                display_name = source_item.category
             else:
-                duplicate_metadata['display_name'] = _("Duplicate of '{0}'").format(source_item.display_name)
+                display_name = source_item.display_name
+
+            if parent_category:
+                duplicate_metadata['display_name'] = display_name
+            else:
+                duplicate_metadata['display_name'] = _("Duplicate of {0}").format(display_name)
 
         asides_to_create = []
         for aside in source_item.runtime.get_asides(source_item):
@@ -698,7 +703,9 @@ def _duplicate_item(parent_usage_key, duplicate_source_usage_key, user, display_
         if source_item.has_children and not children_handled:
             dest_module.children = dest_module.children or []
             for child in source_item.children:
-                dupe = _duplicate_item(dest_module.location, child, user=user)
+                if source_item.category in ['chapter', 'sequential', 'vertical']:
+                    parent_category = source_item.category
+                dupe = _duplicate_item(dest_module.location, child, user=user, parent_category=parent_category)
                 if dupe not in dest_module.children:  # _duplicate_item may add the child for us.
                     dest_module.children.append(dupe)
             store.update_item(dest_module, user.id)

@@ -73,8 +73,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                             duplicate_source_locator: xblockElement.data('locator'),
                             parent_locator: parentElement.data('locator')
                         }, function (data) {
-                            var locator = data.locator;
-                            duplicationOperation.resolve(locator);
+                            duplicationOperation.resolve(data);
                         });
                     return duplicationOperation.promise();
                 });

@@ -312,9 +312,9 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
 
                 event.preventDefault();
                 XBlockViewUtils.duplicateXBlock(xblockElement, parentElement)
-                    .done(function (locator) {
+                    .done(function (data) {
                         ViewUtils.setScrollOffset(placeholderElement, scrollOffset);
-                        placeholderElement.data('locator', locator)
+                        placeholderElement.data('locator', data.locator)
                         if (parentView) {
                             parentView.refresh(self, event);
                         } else {
