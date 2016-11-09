@@ -74,6 +74,9 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                             parent_locator: parentElement.data('locator')
                         }, function(data) {
                             duplicationOperation.resolve(data);
+                        })
+                        .fail(function() {
+                            duplicationOperation.reject();
                         });
                     return duplicationOperation.promise();
                 });
