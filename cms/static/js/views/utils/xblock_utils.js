@@ -64,15 +64,15 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                 });
         };
 
-        duplicateXBlock = function (xblockElement, parentElement) {
+        duplicateXBlock = function(xblockElement, parentElement) {
             return ViewUtils.runOperationShowingMessage(gettext('Duplicating'),
-                function () {
+                function() {
                     var duplicationOperation = $.Deferred();
                     $.postJSON(ModuleUtils.getUpdateUrl(),
                         {
                             duplicate_source_locator: xblockElement.data('locator'),
                             parent_locator: parentElement.data('locator')
-                        }, function (data) {
+                        }, function(data) {
                             duplicationOperation.resolve(data);
                         });
                     return duplicationOperation.promise();
@@ -231,7 +231,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
         return {
             'VisibilityState': VisibilityState,
             'addXBlock': addXBlock,
-            'duplicateXBlock': duplicateXBlock,
+             duplicateXBlock: duplicateXBlock,
             'deleteXBlock': deleteXBlock,
             'updateXBlockField': updateXBlockField,
             'getXBlockVisibilityClass': getXBlockVisibilityClass,

@@ -231,10 +231,10 @@ define(['jquery', 'underscore', 'gettext', 'js/views/pages/base_page', 'common/j
                     placeholderElement = self.createPlaceholderElement().insertAfter(xblockElement);
 
                 XBlockUtils.duplicateXBlock(xblockElement, parentElement)
-                    .done(function (data) {
+                    .done(function(data) {
                         self.onNewXBlock(placeholderElement, scrollOffset, true, data);
                     })
-                    .fail(function () {
+                    .fail(function() {
                         // Remove the placeholder if the update failed
                         placeholderElement.remove();
                     });

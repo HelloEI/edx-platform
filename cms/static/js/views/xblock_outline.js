@@ -296,8 +296,15 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
                 return $('<li/>', {class: 'outline-item'});
             },
 
-            parentElement: function(xblockElement, category){
-                var parentCategory = category == 'unit' ? 'subsection' : category == 'subsection' ? 'section' : 'course';
+            parentElement: function(xblockElement, category) {
+                var parentCategory;
+                if (category === 'unit') {
+                    parentCategory = 'subsection';
+                } else if (category === 'subsection') {
+                    parentCategory = 'section';
+                } else {
+                    parentCategory = 'section';
+                }
                 return xblockElement.closest('.outline-' + parentCategory);
             },
 
@@ -312,20 +319,19 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
 
                 event.preventDefault();
                 XBlockViewUtils.duplicateXBlock(xblockElement, parentElement)
-                    .done(function (data) {
+                    .done(function(data) {
                         ViewUtils.setScrollOffset(placeholderElement, scrollOffset);
-                        placeholderElement.data('locator', data.locator)
+                        placeholderElement.data('locator', data.locator);
                         if (parentView) {
                             parentView.refresh(self, event);
                         } else {
                             self.refresh();
                         }
                     })
-                    .fail(function () {
+                    .fail(function() {
                         // Remove the placeholder if the update failed
                         placeholderElement.remove();
                     });
-
             },
 
             handleAddEvent: function(event) {
