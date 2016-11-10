@@ -2559,7 +2559,6 @@ def change_email_settings(request):
     return JsonResponse({"success": True})
 
 
-@ensure_csrf_cookie
 class LogoutView(TemplateView):
     """
     Logs out user and redirects.
@@ -2573,6 +2572,8 @@ class LogoutView(TemplateView):
     # Keep track of the page to which the user should ultimately be redirected.
     target = reverse_lazy('cas-logout') if settings.FEATURES.get('AUTH_USE_CAS') else '/'
 
+    @login_required
+    @ensure_csrf_cookie
     def dispatch(self, request, *args, **kwargs):  # pylint: disable=missing-docstring
         # We do not log here, because we have a handler registered to perform logging on successful logouts.
         request.is_from_logout = True
