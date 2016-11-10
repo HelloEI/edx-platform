@@ -5,19 +5,19 @@ define([
     'use strict';
     var VideosIndexFactory = function(
         $contentWrapper,
-        postUrl,
+        videoHandlerUrl,
         encodingsDownloadUrl,
         concurrentUploadLimit,
         uploadButton,
         previousUploads
     ) {
         var activeView = new ActiveVideoUploadListView({
-                postUrl: postUrl,
+                postUrl: videoHandlerUrl,
                 concurrentUploadLimit: concurrentUploadLimit,
                 uploadButton: uploadButton,
                 onFileUploadDone: function(activeVideos) {
                     $.ajax({
-                        url: postUrl,
+                        url: videoHandlerUrl,
                         contentType: 'application/json',
                         dataType: 'json',
                         type: 'GET'
@@ -38,6 +38,7 @@ define([
                 }
             }),
             previousView = new PreviousVideoUploadListView({
+                videoHandlerUrl: videoHandlerUrl,
                 collection: new Backbone.Collection(previousUploads),
                 encodingsDownloadUrl: encodingsDownloadUrl
             });
