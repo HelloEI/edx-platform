@@ -2559,6 +2559,7 @@ def change_email_settings(request):
     return JsonResponse({"success": True})
 
 
+@ensure_csrf_cookie
 class LogoutView(TemplateView):
     """
     Logs out user and redirects.
