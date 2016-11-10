@@ -71,7 +71,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
                 } else {
                     HtmlUtils.setHtml(
                         this.$el,
-                        HtmlUtils.ensureHtml(html)
+                        HtmlUtils.HTML(html)
                     );
                 }
             },
@@ -88,7 +88,7 @@ define(['jquery', 'underscore', 'gettext', 'js/views/baseview', 'common/js/compo
                     isCollapsed = this.shouldRenderChildren() && !this.shouldExpandChildren();
                 if (childInfo) {
                     addChildName = StringUtils.interpolate(
-                            gettext('New %(component_type)s'),
+                            gettext('New {component_type}'),
                             {
                                 component_type: childInfo.display_name
                             },

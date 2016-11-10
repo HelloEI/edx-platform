@@ -107,7 +107,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                 messageBody;
             xblockType = xblockType || 'component';
             messageBody = StringUtils.interpolate(
-                    gettext('Deleting this %(xblock_type)s is permanent and cannot be undone.'),
+                    gettext('Deleting this {xblock_type} is permanent and cannot be undone.'),
                     {
                         xblock_type: xblockType
                     },
@@ -118,7 +118,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                 messageBody += ' ' + gettext('Any content that has listed this content as a prerequisite will also have access limitations removed.');   // eslint-disable-line max-len
                 ViewUtils.confirmThenRunOperation(
                     StringUtils.interpolate(
-                        gettext('Delete this %(xblock_type)s (and prerequisite)?'),
+                        gettext('Delete this {xblock_type} (and prerequisite)?'),
                         {
                             xblock_type: xblockType
                         },
@@ -126,7 +126,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                     ),
                     messageBody,
                     StringUtils.interpolate(
-                        gettext('Yes, delete this %(xblock_type)s'),
+                        gettext('Yes, delete this {xblock_type}'),
                         {
                             xblock_type: xblockType
                         },
@@ -137,7 +137,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
             } else {
                 ViewUtils.confirmThenRunOperation(
                     StringUtils.interpolate(
-                        gettext('Delete this %(xblock_type)s?'),
+                        gettext('Delete this {xblock_type}?'),
                         {
                             xblock_type: xblockType
                         },
@@ -145,7 +145,7 @@ define(['jquery', 'underscore', 'gettext', 'common/js/components/utils/view_util
                     ),
                     messageBody,
                     StringUtils.interpolate(
-                        gettext('Yes, delete this %(xblock_type)s'),
+                        gettext('Yes, delete this {xblock_type}'),
                         {
                             xblock_type: xblockType
                         },
