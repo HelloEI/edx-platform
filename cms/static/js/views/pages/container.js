@@ -209,10 +209,12 @@ define(['jquery', 'underscore', 'gettext', 'js/views/pages/base_page', 'common/j
                     buttonPanel = target.closest('.add-xblock-component'),
                     listPanel = buttonPanel.prev(),
                     scrollOffset = ViewUtils.getScrollOffset(buttonPanel),
-                    placeholderElement = this.createPlaceholderElement().appendTo(listPanel),
+                    placeholderEl = $(this.createPlaceholderElement()),
                     requestData = _.extend(template, {
                         parent_locator: parentLocator
-                    });
+                    }),
+                    placeholderElement;
+                placeholderElement = placeholderEl.appendTo(listPanel);
                 return $.postJSON(this.getURLRoot() + '/', requestData,
                     _.bind(this.onNewXBlock, this, placeholderElement, scrollOffset, false))
                     .fail(function() {
@@ -228,8 +230,10 @@ define(['jquery', 'underscore', 'gettext', 'js/views/pages/base_page', 'common/j
                 var self = this,
                     parentElement = self.findXBlockElement(xblockElement.parent()),
                     scrollOffset = ViewUtils.getScrollOffset(xblockElement),
-                    placeholderElement = self.createPlaceholderElement().insertAfter(xblockElement);
+                    placeholderEl = $(self.createPlaceholderElement()),
+                    placeholderElement;
 
+                placeholderElement = placeholderEl.insertAfter(xblockElement);
                 XBlockUtils.duplicateXBlock(xblockElement, parentElement)
                     .done(function(data) {
                         self.onNewXBlock(placeholderElement, scrollOffset, true, data);
